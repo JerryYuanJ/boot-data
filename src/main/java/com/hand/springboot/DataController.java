@@ -4,11 +4,13 @@ import com.hand.springboot.bean.Person;
 import com.hand.springboot.dao.PersonDao;
 import com.hand.springboot.dao.PersonDao2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -96,6 +98,16 @@ public class DataController {
     @RequestMapping("/sort")
     public List<Person> sort() {
         return personDao.findAll(new Sort(Sort.Direction.ASC, "age"));
+    }
+
+    /**
+     * 这样返回的数据，可以在html中直接使用script标签引用
+     * 参考hap的快码维护实现
+     * @return 返回的对象字符串
+     */
+    @RequestMapping(value = "/getAsJs")
+    public String getAsJs() {
+        return "var p=[{\"name\":\"YuanJie\"}]";
     }
 
     @RequestMapping("/page")
